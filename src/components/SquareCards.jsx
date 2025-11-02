@@ -5,21 +5,16 @@ const SquareCards = () => {
     {
       id: 1,
       title: 'Aarti Sangrah',
+      title2: 'Chalisa Sangrah',
       subtitle: 'आरती संग्रह',
+      subtitle2: 'चालीसा संग्रह',
       icon: '🪔',
+      secondIcon: '📿',
       color: 'from-orange-400 to-red-500',
       iconColor: 'text-yellow-300'
     },
     {
       id: 2,
-      title: 'Chalisa Sangrah',
-      subtitle: 'चालीसा संग्रह',
-      icon: '📿',
-      color: 'from-yellow-400 to-orange-500',
-      iconColor: 'text-orange-300'
-    },
-    {
-      id: 3,
       title: 'Bhajan',
       subtitle: 'भजन',
       icon: '🎵',
@@ -27,7 +22,7 @@ const SquareCards = () => {
       iconColor: 'text-pink-200'
     },
     {
-      id: 4,
+      id: 3,
       title: 'Mantra',
       subtitle: 'मंत्र',
       icon: '🕉️',
@@ -35,7 +30,7 @@ const SquareCards = () => {
       iconColor: 'text-purple-200'
     },
     {
-      id: 5,
+      id: 4,
       title: 'Stotram',
       subtitle: 'स्तोत्रम्',
       icon: '📖',
@@ -85,9 +80,8 @@ const SquareCards = () => {
             </div>
           </div>
         </div>
-
         {/* Cards Side by Side */}
-        <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
+        <div className="flex flex-wrap justify-center gap-8 lg:gap-10">
           {categories.map((category, index) => (
             <div
               key={category.id}
@@ -100,28 +94,49 @@ const SquareCards = () => {
               {/* Card Container */}
               <div className={`relative bg-gradient-to-br ${category.color} rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 overflow-hidden h-64`}>
                 
-                {/* Shine Effect - Sweeps from corner to corner */}
+                {/* Shine Effect - Sweeps from corner to corner once */}
                 <div 
                   className="absolute inset-0"
                   style={{
                     background: 'linear-gradient(135deg, transparent 0%, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%, transparent 100%)',
                     backgroundSize: '200% 200%',
-                    animation: 'shine 4s ease-in-out infinite'
+                    animation: 'shine 3.5s ease-in-out 1 forwards'
                   }}
                 ></div>
 
                 {/* Border Glow */}
                 <div className="absolute inset-0 rounded-2xl border-2 border-white/30 group-hover:border-white/60 transition-all duration-500"></div>
 
-                {/* Floating Icon */}
-                <div 
-                  className={`absolute top-12 left-1/2 transform -translate-x-1/2 text-7xl ${category.iconColor} drop-shadow-2xl z-10`}
-                  style={{
-                    animation: 'float 3s ease-in-out infinite'
-                  }}
-                >
-                  {category.icon}
-                </div>
+                {/* Floating Icon(s) */}
+                {category.secondIcon ? (
+                  <div className="absolute top-12 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-10">
+                    <div 
+                      className={`text-6xl ${category.iconColor} drop-shadow-2xl`}
+                      style={{
+                        animation: 'float 3s ease-in-out infinite'
+                      }}
+                    >
+                      {category.icon}
+                    </div>
+                    <div 
+                      className={`text-6xl ${category.iconColor} drop-shadow-2xl`}
+                      style={{
+                        animation: 'float 3s ease-in-out infinite 0.5s'
+                      }}
+                    >
+                      {category.secondIcon}
+                    </div>
+                  </div>
+                ) : (
+                  <div 
+                    className={`absolute top-12 left-1/2 transform -translate-x-1/2 text-7xl ${category.iconColor} drop-shadow-2xl z-10`}
+                    style={{
+                      animation: 'float 3s ease-in-out infinite'
+                    }}
+                  >
+                    {category.icon}
+                  </div>
+                )}
 
                 {/* Decorative Elements */}
                 <div className="absolute top-4 right-4 text-white/20 text-xl">✨</div>
@@ -129,12 +144,31 @@ const SquareCards = () => {
 
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/70 via-black/50 to-transparent">
-                  <h3 className="text-xl font-bold text-white mb-1 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 text-center">
-                    {category.title}
-                  </h3>
-                  <p className="text-base text-yellow-200 font-semibold text-center">
-                    {category.subtitle}
-                  </p>
+                  {category.title2 ? (
+                    <>
+                      <h3 className="text-lg font-bold text-white mb-0.5 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 text-center">
+                        {category.title}
+                      </h3>
+                      <p className="text-sm text-yellow-200 font-semibold text-center mb-2">
+                        {category.subtitle}
+                      </p>
+                      <h3 className="text-lg font-bold text-white mb-0.5 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 text-center">
+                        {category.title2}
+                      </h3>
+                      <p className="text-sm text-yellow-200 font-semibold text-center">
+                        {category.subtitle2}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h3 className="text-xl font-bold text-white mb-1 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 text-center">
+                        {category.title}
+                      </h3>
+                      <p className="text-base text-yellow-200 font-semibold text-center">
+                        {category.subtitle}
+                      </p>
+                    </>
+                  )}
                 </div>
 
                 {/* Hover Particles */}

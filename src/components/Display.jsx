@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import CircularCardsItems from './CircularCardsItems'; // Make sure the import name matches your file
 import SquareCards from './SquareCards';
+import SpiritualFooter from './SpiritualFooter';
 
 const Display = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -186,6 +187,7 @@ const Display = () => {
       {/* Circular Cards Items Component - Added here at the bottom */}
       <CircularCardsItems />
        <SquareCards/>
+       <SpiritualFooter/>
       {/* Add CSS animations for left-right swinging */}
       <style jsx>{`
         @keyframes swingLeft {
