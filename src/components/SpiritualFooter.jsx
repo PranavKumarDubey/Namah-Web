@@ -148,7 +148,6 @@ const SpiritualFooter = () => {
           <p className="text-xs text-orange-200">
             © 2024 Sacred Collection. All rights reserved.
           </p>
-          
           <p className="text-xs text-orange-300 italic">
             सत्यं शिवं सुन्दरम् • Truth, Goodness, Beauty
           </p>
@@ -160,5 +159,5 @@ const SpiritualFooter = () => {
     </footer>
   );
 };
+export default SpiritualFoot;
 
-export default SpiritualFooter;
