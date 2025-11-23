@@ -159,5 +159,5 @@ const SpiritualFooter = () => {
     </footer>
   );
 };
-export default SpiritualFoot;
+export default SpiritualFooter;
 

@@ -1,20 +1,28 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const SquareCards = () => {
+  const navigate = useNavigate();
+
   const categories = [
     {
-      id: 1,
+      key: 'aarti-sangrah',
       title: 'Aarti Sangrah',
-      title2: 'Chalisa Sangrah',
       subtitle: 'आरती संग्रह',
-      subtitle2: 'चालीसा संग्रह',
       icon: '🪔',
-      secondIcon: '📿',
       color: 'from-orange-400 to-red-500',
       iconColor: 'text-yellow-300'
     },
     {
-      id: 2,
+      key: 'chalisa-sangrah',
+      title: 'Chalisa Sangrah',
+      subtitle: 'चालीसा संग्रह',
+      icon: '📿',
+      color: 'from-red-400 to-pink-500',
+      iconColor: 'text-red-200'
+    },
+    {
+      key: 'bhajan',
       title: 'Bhajan',
       subtitle: 'भजन',
       icon: '🎵',
@@ -22,7 +30,7 @@ const SquareCards = () => {
       iconColor: 'text-pink-200'
     },
     {
-      id: 3,
+      key: 'mantra',
       title: 'Mantra',
       subtitle: 'मंत्र',
       icon: '🕉️',
@@ -30,7 +38,7 @@ const SquareCards = () => {
       iconColor: 'text-purple-200'
     },
     {
-      id: 4,
+      key: 'stotram',
       title: 'Stotram',
       subtitle: 'स्तोत्रम्',
       icon: '📖',
@@ -39,23 +47,21 @@ const SquareCards = () => {
     }
   ];
 
+  const handleCardClick = (categoryKey) => {
+    navigate(`/category/${categoryKey}`);
+  };
+
   return (
     <div className="w-full py-12 bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
       <div className="container mx-auto px-4">
-        {/* Spiritual Header with Gradient Background */}
+        {/* Spiritual Header */}
         <div className="relative bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 rounded-3xl shadow-2xl p-8 mb-10 overflow-hidden">
-          {/* Decorative Border */}
           <div className="absolute inset-0 rounded-3xl border-4 border-white/20"></div>
           
-          {/* Header Content */}
           <div className="relative z-10">
             <div className="flex items-center justify-center space-x-8 mb-4">
-              {/* Left OM Symbol */}
-              <div className="text-5xl text-white drop-shadow-2xl animate-pulse">
-                ॐ
-              </div>
+              <div className="text-5xl text-white drop-shadow-2xl animate-pulse">ॐ</div>
               
-              {/* Main Title */}
               <div className="text-center">
                 <h2 className="text-5xl font-bold text-white mb-2 drop-shadow-lg" 
                     style={{fontFamily: 'Georgia, serif'}}>
@@ -66,13 +72,9 @@ const SquareCards = () => {
                 </p>
               </div>
               
-              {/* Right OM Symbol */}
-              <div className="text-5xl text-white drop-shadow-2xl animate-pulse">
-                ॐ
-              </div>
+              <div className="text-5xl text-white drop-shadow-2xl animate-pulse">ॐ</div>
             </div>
             
-            {/* Decorative Line */}
             <div className="flex items-center justify-center mt-4">
               <div className="h-0.5 bg-white/40 w-32"></div>
               <div className="mx-4 text-2xl text-yellow-200">✨</div>
@@ -80,63 +82,43 @@ const SquareCards = () => {
             </div>
           </div>
         </div>
-        {/* Cards Side by Side */}
+
+        {/* Cards Grid */}
         <div className="flex flex-wrap justify-center gap-8 lg:gap-10">
           {categories.map((category, index) => (
             <div
-              key={category.id}
+              key={category.key}
+              onClick={() => handleCardClick(category.key)}
               className="group cursor-pointer flex-shrink-0"
               style={{
                 width: '200px',
                 animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
               }}
             >
-              {/* Card Container */}
               <div className={`relative bg-gradient-to-br ${category.color} rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 overflow-hidden h-64`}>
                 
-                {/* Shine Effect - Sweeps from corner to corner once */}
+                {/* Shine Effect */}
                 <div 
                   className="absolute inset-0"
                   style={{
                     background: 'linear-gradient(135deg, transparent 0%, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%, transparent 100%)',
                     backgroundSize: '200% 200%',
-                    animation: 'shine 3.5s ease-in-out 1 forwards'
+                    animation: 'shine 3.5s ease-in-out infinite'
                   }}
                 ></div>
 
                 {/* Border Glow */}
                 <div className="absolute inset-0 rounded-2xl border-2 border-white/30 group-hover:border-white/60 transition-all duration-500"></div>
 
-                {/* Floating Icon(s) */}
-                {category.secondIcon ? (
-                  <div className="absolute top-12 left-1/2 transform -translate-x-1/2 flex items-center gap-3 z-10">
-                    <div 
-                      className={`text-6xl ${category.iconColor} drop-shadow-2xl`}
-                      style={{
-                        animation: 'float 3s ease-in-out infinite'
-                      }}
-                    >
-                      {category.icon}
-                    </div>
-                    <div 
-                      className={`text-6xl ${category.iconColor} drop-shadow-2xl`}
-                      style={{
-                        animation: 'float 3s ease-in-out infinite 0.5s'
-                      }}
-                    >
-                      {category.secondIcon}
-                    </div>
-                  </div>
-                ) : (
-                  <div 
-                    className={`absolute top-12 left-1/2 transform -translate-x-1/2 text-7xl ${category.iconColor} drop-shadow-2xl z-10`}
-                    style={{
-                      animation: 'float 3s ease-in-out infinite'
-                    }}
-                  >
-                    {category.icon}
-                  </div>
-                )}
+                {/* Floating Icon */}
+                <div 
+                  className={`absolute top-12 left-1/2 transform -translate-x-1/2 text-7xl ${category.iconColor} drop-shadow-2xl z-10`}
+                  style={{
+                    animation: 'float 3s ease-in-out infinite'
+                  }}
+                >
+                  {category.icon}
+                </div>
 
                 {/* Decorative Elements */}
                 <div className="absolute top-4 right-4 text-white/20 text-xl">✨</div>
@@ -144,31 +126,12 @@ const SquareCards = () => {
 
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/70 via-black/50 to-transparent">
-                  {category.title2 ? (
-                    <>
-                      <h3 className="text-lg font-bold text-white mb-0.5 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 text-center">
-                        {category.title}
-                      </h3>
-                      <p className="text-sm text-yellow-200 font-semibold text-center mb-2">
-                        {category.subtitle}
-                      </p>
-                      <h3 className="text-lg font-bold text-white mb-0.5 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 text-center">
-                        {category.title2}
-                      </h3>
-                      <p className="text-sm text-yellow-200 font-semibold text-center">
-                        {category.subtitle2}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <h3 className="text-xl font-bold text-white mb-1 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 text-center">
-                        {category.title}
-                      </h3>
-                      <p className="text-base text-yellow-200 font-semibold text-center">
-                        {category.subtitle}
-                      </p>
-                    </>
-                  )}
+                  <h3 className="text-xl font-bold text-white mb-1 drop-shadow-lg group-hover:scale-105 transition-transform duration-300 text-center">
+                    {category.title}
+                  </h3>
+                  <p className="text-base text-yellow-200 font-semibold text-center">
+                    {category.subtitle}
+                  </p>
                 </div>
 
                 {/* Hover Particles */}
