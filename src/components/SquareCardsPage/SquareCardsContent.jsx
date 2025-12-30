@@ -186,8 +186,9 @@ const SquareCardsContent = () => {
   const scrollContainer = (direction) => {
     const container = document.getElementById('scroll-container');
     if (container) {
+      const scrollAmount = window.innerWidth < 640 ? 200 : 300;
       container.scrollBy({
-        left: direction === 'left' ? -300 : 300,
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
       });
     }
@@ -195,106 +196,153 @@ const SquareCardsContent = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-amber-50">
-      {/* Back Button */}
-      <button
-        onClick={onBack}
-        className="fixed top-6 left-6 z-50 bg-white/90 backdrop-blur-sm hover:bg-white shadow-lg rounded-full p-3 transition-all duration-300 hover:scale-110 group"
-      >
-        <ArrowLeft className="w-6 h-6 text-orange-600 group-hover:text-orange-700" />
-      </button>
+      {/* Header Slider with Border and Back Button */}
+      <div className="px-3 sm:px-4 md:px-6 pt-3 sm:pt-4 md:pt-6">
+        <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[28rem] overflow-hidden rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-white shadow-xl sm:shadow-2xl ring-2 sm:ring-4 ring-orange-200">
+          {headerImages.map((img, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentImageIndex ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              <img 
+                src={img.url} 
+                alt={img.deity} 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
 
-      {/* Header Slider */}
-      <div className="relative w-full h-96 overflow-hidden">
-        {headerImages.map((img, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentImageIndex ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <img src={img.url} alt={img.deity} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-
-            {/* Text Overlay */}
-            <div className="absolute bottom-0 p-8 text-center text-white w-full">
-              <div className="text-6xl mb-4 animate-pulse">{icon}</div>
-              <h1 className="text-5xl font-bold mb-3">{img.deity}</h1>
-              <p className="text-2xl text-orange-200">{img.mantra}</p>
+              {/* Text Overlay - Responsive */}
+              <div className="absolute bottom-0 p-4 sm:p-6 md:p-8 text-center text-white w-full">
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-2 sm:mb-3 md:mb-4 animate-pulse">
+                  {icon}
+                </div>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2 md:mb-3 tracking-wide drop-shadow-lg">
+                  {img.deity}
+                </h1>
+                <p className="text-sm sm:text-lg md:text-xl lg:text-2xl text-orange-200 drop-shadow-md">
+                  {img.mantra}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+
+          {/* Back Button - Inside Header */}
+          <button
+            onClick={onBack}
+            className="absolute top-2 left-2 sm:top-3 sm:left-3 md:top-4 md:left-4 z-50 bg-white/80 backdrop-blur-sm hover:bg-white shadow-md rounded-full p-1.5 sm:p-2 md:p-2.5 transition-all duration-300 hover:scale-110 active:scale-95"
+            aria-label="Go back"
+          >
+            <ArrowLeft className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-700" />
+          </button>
+        </div>
       </div>
 
       {/* Trending Section */}
-      <div className="px-6 py-10">
-        <h2 className="text-4xl font-bold text-center mb-1 bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent">
+      <div className="px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-1 bg-gradient-to-r from-orange-600 via-red-600 to-yellow-600 bg-clip-text text-transparent">
           Trending {displayName}
         </h2>
-        <p className="text-2xl text-center text-orange-500 font-semibold">
+        <p className="text-lg sm:text-xl md:text-2xl text-center text-orange-500 font-semibold mb-6 sm:mb-8">
           {hindiName}
         </p>
 
         {/* Horizontal Scrollable Cards */}
-        <div className="relative max-w-7xl mx-auto mt-8">
-          {/* Left Arrow */}
+        <div className="relative max-w-7xl mx-auto">
+          {/* Left Arrow - Hidden on mobile */}
           <button
             onClick={() => scrollContainer("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-3 shadow-lg hover:scale-110 transition-transform"
+            className="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 md:p-3 shadow-lg hover:scale-110 active:scale-95 transition-transform"
           >
-            <ChevronLeft className="w-6 h-6 text-orange-600" />
+            <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-orange-600" />
           </button>
 
           {/* Cards Container */}
           <div
             id="scroll-container"
-            className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide scroll-smooth px-12"
+            className="flex overflow-x-auto gap-3 sm:gap-4 md:gap-6 pb-4 scrollbar-hide scroll-smooth px-0 sm:px-8 md:px-12"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
-            {items.map((item) => (
+            {items.map((item, index) => (
               <div
                 key={item.id}
                 className="group flex-shrink-0 cursor-pointer"
-                style={{ width: "280px" }}
+                style={{ 
+                  width: "clamp(150px, 45vw, 280px)",
+                  animation: `fadeInScale 0.5s ease-out ${index * 0.1}s both`
+                }}
               >
                 <div
-                  className={`relative aspect-square bg-gradient-to-br ${item.color} rounded-2xl shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300`}
+                  className={`relative aspect-square bg-gradient-to-br ${item.color} rounded-xl sm:rounded-2xl shadow-md sm:shadow-lg hover:scale-105 active:scale-95 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-300`}
                 >
                   {/* Icon */}
-                  <div className="absolute inset-0 flex items-center justify-center text-8xl">
+                  <div className="absolute inset-0 flex items-center justify-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
                     {item.icon}
                   </div>
 
                   {/* Play Count Badge */}
-                  <div className="absolute bottom-3 right-3 bg-black/60 text-white px-3 py-1 rounded-full text-sm font-semibold backdrop-blur-sm">
+                  <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 bg-black/60 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold backdrop-blur-sm">
                     {item.plays}
                   </div>
 
                   {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl sm:rounded-2xl"></div>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-center mt-3 font-semibold text-gray-800 text-lg">
+                <h3 className="text-center mt-2 sm:mt-3 font-semibold text-gray-800 text-sm sm:text-base md:text-lg line-clamp-2">
                   {item.title}
                 </h3>
               </div>
             ))}
           </div>
 
-          {/* Right Arrow */}
+          {/* Right Arrow - Hidden on mobile */}
           <button
             onClick={() => scrollContainer("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-3 shadow-lg hover:scale-110 transition-transform"
+            className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 rounded-full p-2 md:p-3 shadow-lg hover:scale-110 active:scale-95 transition-transform"
           >
-            <ChevronRight className="w-6 h-6 text-orange-600" />
+            <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-orange-600" />
           </button>
+        </div>
+
+        {/* Scroll Hint for Mobile */}
+        <div className="flex sm:hidden items-center justify-center mt-4 space-x-2 text-gray-500 text-xs animate-bounce">
+          <ChevronLeft className="w-4 h-4" />
+          <span>Swipe to explore more</span>
+          <ChevronRight className="w-4 h-4" />
         </div>
       </div>
 
-      {/* Hide scrollbar */}
+      {/* Hide scrollbar and animations */}
       <style jsx>{`
         #scroll-container::-webkit-scrollbar {
           display: none;
+        }
+
+        @keyframes fadeInScale {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        /* Smooth scrolling on touch devices */
+        #scroll-container {
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* Prevent text selection on mobile */
+        .group {
+          -webkit-tap-highlight-color: transparent;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          user-select: none;
         }
       `}</style>
     </div>
