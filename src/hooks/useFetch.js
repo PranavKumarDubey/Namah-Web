@@ -4,7 +4,7 @@ import api from '../services/api';
 /**
  * Custom hook for fetching data
  * 
- * @param {string} endpoint - API endpoint
+ * @param {string} endpoint - API endpoint (e.g., 'aarti.json')
  * @param {object} options - { enabled: true, headers: {} }
  * @returns {object} - { data, loading, error, refetch }
  */
@@ -19,15 +19,17 @@ function useFetch(endpoint, options = {}) {
     try {
       setLoading(true);
       setError(null);
+      // ✅ FIX: api interceptor already returns response.data
+      // So we don't need to access .data again
       const response = await api.get(endpoint, { headers });
-      setData(response.data);
+      setData(response); // ✅ Direct response (not response.data)
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Failed to fetch data');
       console.error(`Error fetching ${endpoint}:`, err);
     } finally {
       setLoading(false);
     }
-  }, [endpoint, JSON.stringify(headers)]); // Stringify to compare object values
+  }, [endpoint, JSON.stringify(headers)]);
 
   useEffect(() => {
     if (enabled) {

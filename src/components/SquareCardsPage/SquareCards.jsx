@@ -1,51 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAllCategories } from '../../config/categories';
 
 const SquareCards = () => {
   const navigate = useNavigate();
 
-  const categories = [
-    {
-      key: 'aarti-sangrah',
-      title: 'Aarti Sangrah',
-      subtitle: 'आरती संग्रह',
-      icon: '🪔',
-      color: 'from-orange-400 to-red-500',
-      iconColor: 'text-yellow-300'
-    },
-    {
-      key: 'chalisa-sangrah',
-      title: 'Chalisa Sangrah',
-      subtitle: 'चालीसा संग्रह', 
-      icon: '📿',
-      color: 'from-red-400 to-pink-500',
-      iconColor: 'text-red-200'
-    },
-    {
-      key: 'bhajan',
-      title: 'Bhajan',
-      subtitle: 'भजन',
-      icon: '🎵',
-      color: 'from-pink-400 to-red-500',
-      iconColor: 'text-pink-200'
-    },
-    {
-      key: 'mantra',
-      title: 'Mantra',
-      subtitle: 'मंत्र',
-      icon: '🕉️',
-      color: 'from-purple-500 to-indigo-600',
-      iconColor: 'text-purple-200'
-    },
-    {
-      key: 'stotram',
-      title: 'Stotram',
-      subtitle: 'स्तोत्रम्',
-      icon: '📖',
-      color: 'from-blue-500 to-teal-500',
-      iconColor: 'text-blue-200'
-    }
-  ];
+  // ✅ Get categories from centralized config
+  const categories = getAllCategories();
 
   const handleCardClick = (categoryKey) => {
     navigate(`/category/${categoryKey}`);

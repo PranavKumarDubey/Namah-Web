@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import CircularCardsItems from './CircularCardsItems'; // Make sure the import name matches your file
-import SquareCards from './SquareCards';
+import SquareCards from './SquareCardsPage/SquareCards';
 import SpiritualFooter from './SpiritualFooter';
 
 const Display = () => {
